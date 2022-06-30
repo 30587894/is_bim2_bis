@@ -8,6 +8,9 @@ date_default_timezone_set('UTC');
 
         private $comp_ingr;
 
+        function get_comp_ingredientes(){
+            return $this->comp_ingr;
+        }
         function get_comp_ingr($ref_denominacion){
            
           
@@ -16,7 +19,7 @@ date_default_timezone_set('UTC');
         }
         
         function __construct(){
-            print ("Construido");
+            //print ("Construido");
             //global $comp_ingr;
             $this->comp_ingr = $this->cargar_ingredientes();
             

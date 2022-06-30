@@ -1,32 +1,71 @@
-mascota.php
-
+<html>
 <?php
 class mascotas{
 
+    private $mascotas_caracteristica;
+
     private $mascota_caracteristica;
 
-    //function get_comp_ingr($ref_denominacion){
-       
-        //foreach($comp_ingr as $oo)
-        //{
-      //      echo ($this->comp_ingr[$ref_denominacion][1]." ".$this->comp_ingr[$ref_denominacion][2]);
-        //}
-        //return $item_elegido;
-    //}
-    
-    function __construct(){
-        print ("Construido");
-        //global $comp_ingr;
-        $this->mascota_caracteristica = $this->masc_get();
-        
-        
+    private $peso;
+    private $MER; //calorias calculadas para la caracteristica de mascota y peso
+
+    public static  $num_reg=0;
+
+    private $status;
+
+    function get_mascotas_caracteristica(){
+
+        return $this->mascotas_caracteristica;
     }
 
-    function masc_get(){
-        $mascota_caracteristica = array();
+   
+    function __construct(){
+        print ("Construido");
+      
+        $this->mascotas_caracteristica = $this->mascotas_get();
+      
+    }
+    function mascotas_put($status, $RER){
+        $myfile ="RER.csv";
+        if (($handle = fopen("RER.csv", "a")) !== FALSE) {
+            $this->num_reg += 1;
+            $txt = $this->num_reg.";".$status.";".$RER."\n";
+            fwrite($handle, $txt);
+                   
+            fclose($handle);
+       }
+     
+      
+    }
+    
+    function mascotas_get(){
+        $myfile ="RER.csv";
+        $mascotas_caracteristica = array();
+        if (($handle = fopen("RER.csv", "r")) !== FALSE) {
+                 $row= 1;
+ 
+                 
+                while (($mascota = fgetcsv($handle, 100, ";")) !== FALSE) {
+                    
+                    $this->num_reg = count($mascota);
+                    if(is_numeric($mascota[0])){ //no primera fila cabecera
+                        $mascotas_caracteristica[$mascota[0]] =$mascota;
+                        //echo ("Linea 56 ". $mascota[0]." ".$mascota[1]."<br>");
+                        $row++;
+                    };
+                }
+    
+               
+            fclose($handle);
+            }
+            //$this->mascotas_caracteristica = $mascotas_caracteristica;
+            return $mascotas_caracteristica;
+        }
+    function masc_ind_get($num_reg, $peso){
+        $mascotas_caracteristica = array();
         if (($handle = fopen("RER.csv", "r")) !== FALSE) {
                 $id_animal=0;
-                $denominacion="";
+                $especie="";
                 $RER=0;
                 
                 //$mascota_caracterisiticas = array();
@@ -35,29 +74,36 @@ class mascotas{
                     
                     $num = count($mascota);
                     if(is_numeric($mascota[0])){ //no primera fila cabecera
-                        $mascota_caracteristica[$mascota[0]] =$mascota;
+                        $mascotas_caracteristica[$mascota[0]] =$mascota;
                         $row++;
-                    };
+                    }
                 }
     
-                foreach($mascota_caracteristica as $ia)
+                foreach($mascotas_caracteristica as $ia)
                 {
-                    echo ($ia[1]." ".$ia[2]." ".$ia[3]."\n");
-                }   
+                    if($ia[0]==$num_reg){
+                    echo ($ia[0]." ".$ia[1]." ".$ia[2]."----    \n");
+                    $RER = $ia[2];
+                    $this->MER = 70*(($peso)**(0.75));
+                    echo ($ia[0].";".$ia[1].";".$ia[2].";".$this->MER."\n");
+                    $this->mascota_caracteristica = $ia;  
+                    break;  
+                    }
+                }  
             fclose($handle);
             }
-            return $mascota_caracteristica;
+            
+            return $ia;
         }
+    
+    
+
+
+
     }
-
-$ingr_elegido_clase = new mascotas();
-//$ingr_elegido_clase->cargar_ingredientes();
-//$ingr_elegido_clase->get_comp_ingr(2);
-
-
-
 
 
 
 
 ?>
+</html>
