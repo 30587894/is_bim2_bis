@@ -60,10 +60,10 @@ date_default_timezone_set('UTC');
 
             private $mascotas_caracteristica;
         
-            //private $mascota_caracteristica;
+            private $mascota_caracteristica;
         
             private $peso;
-            //private $MER; //calorias calculadas para la caracteristica de mascota y peso
+            private $MER; //calorias calculadas para la caracteristica de mascota y peso
         
             private  $num_reg;
         
@@ -81,7 +81,7 @@ date_default_timezone_set('UTC');
         
            
             function __construct(){
-                //print ("Construido");
+                print ("Construido");
               
                 $this->mascotas_caracteristica = $this->mascotas_get();
               
@@ -122,7 +122,7 @@ date_default_timezone_set('UTC');
                   
                     return $mascotas_caracteristica;
                 }
-            function masc_ind_get($denominacion){
+            function masc_ind_get($num_reg, $peso){
                 $mascotas_caracteristica = array();
                 if (($handle = fopen("RER.csv", "r")) !== FALSE) {
                         $id_animal=0;
@@ -142,13 +142,13 @@ date_default_timezone_set('UTC');
             
                         foreach($mascotas_caracteristica as $ia)
                         {
-                            if($ia[1]==$denominacion){
-                                //echo ($ia[0]." ".$ia[1]." ".$ia[2]."----    \n");
-                                $RER = $ia[2];
-                                //$this->MER = 70*(($peso)**(0.75));
-                                //echo ($ia[0].";".$ia[1].";".$ia[2].";".$this->MER."\n");
-                               // $this->mascota_caracteristica = $ia;  
-                                break;  
+                            if($ia[0]==$num_reg){
+                            echo ($ia[0]." ".$ia[1]." ".$ia[2]."----    \n");
+                            $RER = $ia[2];
+                            $this->MER = 70*(($peso)**(0.75));
+                            echo ($ia[0].";".$ia[1].";".$ia[2].";".$this->MER."\n");
+                            $this->mascota_caracteristica = $ia;  
+                            break;  
                             }
                         }  
                     fclose($handle);
