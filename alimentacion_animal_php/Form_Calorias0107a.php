@@ -26,17 +26,19 @@ public function __construct() {
             FormularioCS::$veces +=1;
 
 
-            if(FormularioCS::$veces==1){
+            //if(FormularioCS::$veces==1){
 
                     $this->form_ingredientes();
                     
-            }
+           // }
        }
 //$limpia_pantalla = wclear();
  function form_ingredientes(){
-    
+
     //$galimentos = array();
-        echo '<form  action="Form_Calorias.php" method="GET">'; 
+        echo '<form  method="POST">';
+        
+      
         echo  '<select multiple name= alimentos[] width = 500px>';
             $i=1;
             global $lista_a;
@@ -54,25 +56,80 @@ public function __construct() {
         echo'</select>';
         //FormularioCS::$veces +=1;
         echo '<input type=submit>';
+    
+       
+        $iga=0;
+        global $alimentos;
+        $alimentos;
         
+        if (isset($_POST['alimentos'])) {
+        
+                $aux=$_POST['alimentos'];
+                $i = 1;
+                foreach($aux as $ga){
+                    if(!is_null($ga)){
+                        $alimentos[$iga] = $ga;
+                            
+                         //   echo '<br>'.$ga.'<br>';
+                        //  echo '  <input type = "text" name= "busca" value='.$i.'>   '; 
+
+                            echo ' Cantidad de '.$ga.'  <input type = "text" name= "cantidad_alimento"><br>'; 
+
+                            echo '<input type=submit>';
+                            $indice =0;
+                            $calor_ga =0;
+                            global $lista_a;
+                            foreach($lista_a as $lis){
+                                if(str_contains($ga,$lis[1]))
+                                {
+                                    $indice =$lis[0]; 
+                                    $calor_ga =$lis[3];
+                                    break;
+                                }                            }
+                            
+                            //$buscado =$_POST["busca"];
+                            //echo  "LINEA 116  -->".$buscado; 
+                            
+                            if (isset($_POST['cantidad_alimento'])) {
+                                    $cant_alim = $_POST['cantidad_alimento'];
+                                    
+                                    echo  $cant_alim."---".$alimentos[$i]." cal:".$calor_ga."<br>";
+                                //   calcularCalorias($ma, $cant_alim);
+                                    $matriz_buscados[][0]=$indice;
+                                    $matriz_buscados[][1]=$ga;
+                                    $matriz_buscados[][2]=$cant_alim;
+                                    $matriz_buscados[][3]=$calor_ga;
+                                    $i += 1;
+
+                            }
+                    }
+                    
+        
+       
+                 }
         echo '</form>';
+
+        $suma_calorias =0;
+
+        foreach($matriz_buscados as $bus){
+
+            $sum_par= round($bus[3]*$bus[2]);
+            echo  $bus[0].'--'. $bus[1].'-cantidad: '.$bus[2].'-cal/ud:'.$bus[3].' calorias racion: '.$sum_par.'<br>';
+            $suma_calorias +=$sum_par;
+
+        }
+
+        echo "CALORIAS MENU ".$suma_calorias;
+      
+       
+
+
         
-        global $lu;
-        $lu +=1;
-        //FormularioCS::$veces +=1;
-        echo " VECES ".FormularioCS::$veces;
-        
-         //global $matriz_alim;
-         $alimentos= array('hola');
-        
+      
+        }       
 
 
-        }     
-
-        
-//global $matriz_alim;
-
-
+    }
 }
 
 class Resul{
@@ -95,15 +152,9 @@ class Resul{
                 //}
                 global $prealimentos;
                 $alimentos = $prealimentos;
-                $this->form_calorias($prealimentos);
-                foreach($alimentos as $io){
-                    echo "2º pasada".$io.'<br>';
-                }
-                $this->resultado($alimentos);
-                foreach($alimentos as $io){
-                    echo "3 pasada".$io.'<br>';
-                }
-                global $Suma_calorias_alimentos;
+                
+                //$this->resultado($alimentos);
+               global $Suma_calorias_alimentos;
                 echo " Calorias aportadas por los alimentos escogidos ".$Suma_calorias_alimentos;
     }
 
@@ -111,33 +162,6 @@ function getalimentos(){
     global $alimentos;
     return $alimentos;
 }
-
-function form_calorias($alimen){
-    //global $matriz_alim;
-    //$matriz_alim = $_POST['alimentos'];
-    //$aux_conjunto_alim =$matriz_alim;
-    //$conjunto_alim = $aux_conjunto_alim;
-
-
-
-            echo '<form  method="REQUEST">'; //action="FormularioCaloriasSuma.php"
-            $lm =1;
-            //global $alimen;
-            foreach($_GET['alimentos']as $denom_alimento){
-
-                $busca_deno = $denom_alimento;
-
-                echo '  <input type = "text" name= "busca'.$lm.'" value='.$lm.'>   '; 
-
-                echo ' Cantidad de '.$denom_alimento.'  <input type = "text" name= "cantidad_alimento"'.$lm.' value= 0><br>'; 
-                $lm += 1;
-            
-            }
-            echo '<input type=submit>';
-            echo '</form>'; 
-        
-        
-        }
 
 
 
@@ -150,10 +174,10 @@ function resultado($matriz_alim){
     
     foreach($matriz_alim as $ma){
     
-        $buscado =$_REQUEST["busca".$i];
+        $buscado =$_POST["busca".$i];
         echo  "LINEA 116".$buscado; 
       //  if($lista_a[0]==$_POST["busca".$i]){
-        $cant_alim = $_REQUEST['cantidad_alimento'.$i];
+        $cant_alim = $_POST['cantidad_alimento'.$i];
         echo "Linea 119".$cant_alim;
         $i += 1;
         echo $cant_alim."---".$ma;
@@ -190,20 +214,7 @@ function calcularCalorias($alimento, $cant_alim){
 
 
 $FCSa = new FormularioCS();
-static $prealimentos =array('HOLA');
-static $t=0;
-if($t==0){
 
-//$prealimentos = $_GET['alimentos'];
-$t+=1;
-}
-foreach($prealimentos as $uo){
-    echo "linea 160".$uo;
-}
-$xxres = new Resul($prealimentos);
-//global $xxres->getalimentos();
-foreach($xxres->getalimentos() as $uo){
-    echo "linea 164".$uo;
-}
+$xxres = new Resul("hola");
 
 ?>
