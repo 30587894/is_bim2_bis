@@ -23,20 +23,30 @@ public function __construct() {
 
             $Suma_calorias_alimentos = 0;
          
-            FormularioCS::$veces +=1;
+            global $matriz_buscados;
+            global $aux;
+            global $suma_calorias;
 
-
-            if(FormularioCS::$veces==1){
+            $matriz_buscados = array(0,0);
 
                     $this->form_ingredientes();
                     
-            }
+                    $this->resultado($aux);
+
+
+          
+
+          
+   
+           echo "CALORIAS MENU ".$suma_calorias;
        }
 //$limpia_pantalla = wclear();
  function form_ingredientes(){
-    
+
     //$galimentos = array();
-        echo '<form  action="Form_Calorias.php" method="GET">'; 
+        echo '<form  method="POST">';
+        
+      
         echo  '<select multiple name= alimentos[] width = 500px>';
             $i=1;
             global $lista_a;
@@ -54,27 +64,106 @@ public function __construct() {
         echo'</select>';
         //FormularioCS::$veces +=1;
         echo '<input type=submit>';
-        
-        echo '</form>';
-        
-        global $lu;
-        $lu +=1;
-        //FormularioCS::$veces +=1;
-        echo " VECES ".FormularioCS::$veces;
-        
-         //global $matriz_alim;
-         $alimentos= array('hola');
-        
+       // echo '</form>';
+    
+       
+        $iga=0;
+        global $alimentos;
+        $alimentos;
+        global $matriz_buscados;
+        $matriz_buscados = array();
+       
+        global $suma_calorias;
+        $sum_calorias =0;
+        global $aux;
+        $aux = array("");
+
+                if (isset($_POST['alimentos'])) {
+                                    
+                        $aux=$_POST['alimentos'];
+                }
+                $i = 1;
+                $calor_ga =0; // ((calorias gramo))
+
+                 $int_aux = count($aux);
+                 echo "<br> Numero  de alimentos escogidos ".$int_aux."<br>";
+                 $m =0;
+                 while ($m<$int_aux){
+                   $ga= $aux[$m];
+                      // echo $ga;
+                    if(!is_null($ga)){
+                        $alimentos[$iga] = $ga;
+                         
+                            //echo '<form  method="REQUEST">';
+                            echo ' <br> Cantidad de '.$ga.'  <input type = "number" name= "cantidad_alimento'.$i.'" value = 0><br>'; 
+                           // echo "variable cargada". $_POST['Cantidad_alimento'];
+                            
+                           // echo '<input type=submit>';
+
+                            
+                            $m++;
+                    }
+                    
+             
+                    
+                }
+                
 
 
-        }     
+                    echo '<input type=submit>';
 
-        
-//global $matriz_alim;
+                    echo '</form>';
+                   
 
+            }         
+                   // echo '<br> Añadir más ingredientes? s/n <input type = "text" name="continuar" value= "S"> <br>'; 
+function resultado($aux)  { 
+                global $suma_calorias;      
+                $int_aux = count($aux);         
+                $i =0;
+                while ($i<$int_aux){
+                     $ga= $aux[$i];
+                   if (isset($_POST["cantidad_alimento".$i])) {
+                    // echo " SI acepta cantidad alimento linea 95";
+                    $cant_alim = $_POST["cantidad_alimento".$i];}
 
-}
+                            global $cant_alim;
+                            $indice =0;
+                            global $calor_ga;
+                            $calor_ga =0;
+                            global $lista_a;
+                            foreach($lista_a as $lis){
+                                if(str_contains($ga,$lis[1]))
+                                {
+                                    $indice =$lis[0]; 
+                                    $calor_ga =$lis[3];
+                                    echo "<br> JOOOOOOOOOO ".$ga."Cant ".$cant_alim." Calorias_gramo".$calor_ga;
+                                    break;
+                                }
+                            }
+                        
+                        
 
+            
+
+                            
+                                $matriz_buscados[$i][0]=$indice;
+                                $matriz_buscados[$i][1]=$ga;
+                                $matriz_buscados[$i][2]=$cant_alim;
+                                $matriz_buscados[$i][3]=$calor_ga;
+                                $matriz_buscados[$i][4]=$cant_alim*$calor_ga;
+                                $suma_calorias += $matriz_buscados[$i][4];
+                                $i += 1;
+                            
+                                echo  "<br> resultado: ".$ga."---".$cant_alim." cal: ".$calor_ga." parcial de calorias= ". $cant_alim* $calor_ga."<br>";
+                                
+       
+                 }
+                 global $suma_calorias;
+                 echo '<br> LAS CALORIAS APORTADAS SON '.$suma_calorias;
+                }
+                
+      }
 class Resul{
 
     private  $Suma_calorias_alimentos;
@@ -95,15 +184,9 @@ class Resul{
                 //}
                 global $prealimentos;
                 $alimentos = $prealimentos;
-                $this->form_calorias($prealimentos);
-                foreach($alimentos as $io){
-                    echo "2º pasada".$io.'<br>';
-                }
-                $this->resultado($alimentos);
-                foreach($alimentos as $io){
-                    echo "3 pasada".$io.'<br>';
-                }
-                global $Suma_calorias_alimentos;
+                
+                //$this->resultado($alimentos);
+               global $Suma_calorias_alimentos;
                 echo " Calorias aportadas por los alimentos escogidos ".$Suma_calorias_alimentos;
     }
 
@@ -111,33 +194,6 @@ function getalimentos(){
     global $alimentos;
     return $alimentos;
 }
-
-function form_calorias($alimen){
-    //global $matriz_alim;
-    //$matriz_alim = $_POST['alimentos'];
-    //$aux_conjunto_alim =$matriz_alim;
-    //$conjunto_alim = $aux_conjunto_alim;
-
-
-
-            echo '<form  method="REQUEST">'; //action="FormularioCaloriasSuma.php"
-            $lm =1;
-            //global $alimen;
-            foreach($_GET['alimentos']as $denom_alimento){
-
-                $busca_deno = $denom_alimento;
-
-                echo '  <input type = "text" name= "busca'.$lm.'" value='.$lm.'>   '; 
-
-                echo ' Cantidad de '.$denom_alimento.'  <input type = "text" name= "cantidad_alimento"'.$lm.' value= 0><br>'; 
-                $lm += 1;
-            
-            }
-            echo '<input type=submit>';
-            echo '</form>'; 
-        
-        
-        }
 
 
 
@@ -150,10 +206,10 @@ function resultado($matriz_alim){
     
     foreach($matriz_alim as $ma){
     
-        $buscado =$_REQUEST["busca".$i];
+        $buscado =$_POST["busca".$i];
         echo  "LINEA 116".$buscado; 
       //  if($lista_a[0]==$_POST["busca".$i]){
-        $cant_alim = $_REQUEST['cantidad_alimento'.$i];
+        $cant_alim = $_POST['cantidad_alimento'.$i];
         echo "Linea 119".$cant_alim;
         $i += 1;
         echo $cant_alim."---".$ma;
@@ -190,20 +246,7 @@ function calcularCalorias($alimento, $cant_alim){
 
 
 $FCSa = new FormularioCS();
-static $prealimentos =array('HOLA');
-static $t=0;
-if($t==0){
 
-//$prealimentos = $_GET['alimentos'];
-$t+=1;
-}
-foreach($prealimentos as $uo){
-    echo "linea 160".$uo;
-}
-$xxres = new Resul($prealimentos);
-//global $xxres->getalimentos();
-foreach($xxres->getalimentos() as $uo){
-    echo "linea 164".$uo;
-}
+
 
 ?>

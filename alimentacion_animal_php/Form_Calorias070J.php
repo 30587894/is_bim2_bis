@@ -162,6 +162,21 @@ function resultado($aux)  {
                  global $suma_calorias;
                  echo '<br> LAS CALORIAS APORTADAS SON '.$suma_calorias;
                 }
+
+            function salva_en_csv($matriz_buscados){
+                function mascotas_put($status, $RER){
+                    $myfile ="RER.csv";
+                    if (($handle = fopen("RER.csv", "a")) !== FALSE) {
+                        $this->num_reg += 1;
+                        $txt = $this->num_reg.";".$status.";".$RER."\n";
+                        fwrite($handle, $txt);
+                               
+                        fclose($handle);
+                   }
+                 
+                  
+                }
+            }
                 
       }
 class Resul{
