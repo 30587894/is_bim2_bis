@@ -1,15 +1,28 @@
 
+
+
+
+
+
+
+
 <?php
 session_start();
 //$email = $_SESSION["mivariable"];
 include_once("cabeceras.php");
 
-error_reporting(0);
+//error_reporting(0);
 
 Class resultados{
 
 
-    
+    private $relleno_Calorias_Menu_csv;
+
+    private $animales_anadir;
+
+    //private $cardinalidad_menu; // nº row
+
+    private $conjunto_animales_anadir;
 
     private $animal;
 
@@ -18,6 +31,14 @@ Class resultados{
     private $MER;
 
     private $num_menu;
+
+    private  $array_alimentos_escogidos;
+
+    private $matriz_alimentos_escogidos;
+    
+    private $cal_id_menu;
+
+    private $cal_menu;
 
     private $gra_cal; //gramos de calorias que come animal
 
@@ -31,12 +52,28 @@ Class resultados{
     function __constsruct(){
         
        
+        //$FCS = new FormularioCS();
+        global $alimento_anadir;
+
+        global $animales_anadir;
+       
+        global $num_menu;
+
+        global $array_alimentos_escogidos;
+
+        global $lu;
+
         global $relleno_Calorias_Menu_csv;
 
         global $relleno_Calorias_Menu_csv;
         $relleno_Calorias_Menu_csv = new Rellenar_Calorias_Menu();
 
-     
+       /* 
+        $this->formulario1();
+        $this->alimentos();
+
+        $this->status_animal();
+        */
     }
 
  
@@ -64,7 +101,7 @@ Class resultados{
                             $i+=1;
                         
                         }
-                echo '</select><br>';
+                echo '</select>';
 
                 echo 'kgs mascota <input type=text name= "peso" width =3px>';
                 echo  "% calorias: <input type= numeric name ='porcal' value =$gmc[5] width =3px>";
@@ -84,13 +121,13 @@ Class resultados{
                         echo "% calorias: <input type= numeric name ='porcentajecalorias$i' value =$la[3]>";
                         echo "% proteinas: <input type= numeric name ='porcentajeproteinas$i' value =$la[4]>";
                         echo "% grasas: <input type= numeric name ='porcentajegrasas$i' value =$la[5]>";
-                        echo "% carbohidratos: <input type= numeric name ='porcentajecarbohidratos$i' value =$la[6]><br>";
+                        echo "% carbohidratos: <input type= numeric name ='porcentajecarbohidratos$i' value =$la[6]>";
                 
                    if($i++>7){
                        break;
                    }
                 }
-            echo '<br><input type=submit>';
+            echo '<input type=submit>';
             echo '</form>';
            
             include_once ("Classes.php");
@@ -104,22 +141,20 @@ Class resultados{
            
              
             $this->cal_menu = $relleno_Calorias_Menu_csv->get_cal_menu();
-         
+           // $num_rows = 33;//count($this->cal_menu);
+           // global $animales_anadir;
            global $relleno_Calorias_Menu_csv;
             
 
-         
-          
+           $masc_ind= new mascotas();
+
+           $reg_masc_ind = $masc_ind->masc_ind_get($this->animal);
 
            
 
             if(isset ($_POST['animales'])){
                 $this->animal= $_POST['animales'];}////
-
-
-                $masc_ind= new mascotas();
-
-                $reg_masc_ind = $masc_ind->masc_ind_get($this->animal);
+     
             if(isset ($_POST['peso'])){
                     $this->peso = floatval($_POST['peso']);
                     
@@ -212,14 +247,14 @@ Class resultados{
 
             $jk=0;
             foreach($matriz_alimentos_escogidos as $mae){
-                echo "<br> Menu nº ".$mae[0]."    incluye: ".$mae[1]. ";   gramos: ".$mae[2]. ";  calorias aportadas:".round($mae[4],2);
+                echo "<br> Menu nº ".$mae[0]."    incluye: ".$mae[1]. "   gramos: ".$mae[2]. "  calorias aportadas:".$mae[4];
                 
-                $_SESSION["alimentos_racion".$jk][0]=$mae[0];//menu
-                $_SESSION["alimentos_racion".$jk][1]=$mae[2];//cantidad
-                $_SESSION["alimentos_racion".$jk][2]=$mae[1];//alimento
-                $_SESSION["alimentos_racion".$jk][3]=$mae[3];//porcentaje
+                $_SESSION["alimentos_racion".$jk][0]=$mae[0];
+                $_SESSION["alimentos_racion".$jk][1]=$mae[2];
+                $_SESSION["alimentos_racion".$jk][2]=$mae[1];
+                $_SESSION["alimentos_racion".$jk][3]=$mae[3];
                 $_SESSION["alimentos_racion".$jk][4]=$mae[4];
-                //cal_total
+               
                 $jk++;
             }
             $_SESSION['u']=$jk;
@@ -227,10 +262,10 @@ Class resultados{
         echo '<form action = "Cargar_menu.php" method="POST">';
 
         echo'<input type="text" name="guardar_registros" required value= "Si">';
-        echo '<input type="submit"  value="CARGAR MENU"/>'; 
+        echo '<input type="submit"  value="Si"/>'; 
      
         echo '</form>';
-       
+        //}
     }
 
    

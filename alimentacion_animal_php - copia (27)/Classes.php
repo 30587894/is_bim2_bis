@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(0);
+//error_reporting(0);
 
 date_default_timezone_set('UTC');
 
@@ -25,7 +25,8 @@ date_default_timezone_set('UTC');
         }
 
         function __construct(){
-          
+            //print ("Construido");
+            //global $comp_ingr;
             $this->comp_ingr = $this->cargar_ingredientes();
             
             
@@ -53,7 +54,13 @@ date_default_timezone_set('UTC');
         function cargar_ingredientes(){
             $comp_ingr = array();
             if (($handle = fopen("COMPOSICION_INGREDIENTES.csv", "r")) !== FALSE) {
-                    
+                    $id_alimento=0;
+                    $denominacion="";
+                    $tipo_alimento="";
+                    $porciento_calorias=0;
+                    $porciento_proteinas=0;
+                    $porciento_grasa=0;
+                    $porciento_carbohidratos=0;
                     $comp_ingr = array();
                     $row= 1;
                     while (($alimento = fgetcsv($handle, 7000, ";")) !== FALSE) {
@@ -78,11 +85,25 @@ date_default_timezone_set('UTC');
 
             private $mascotas_caracteristica;
         
-           
+            //private $mascota_caracteristica;
+        
+            private $peso;
+            //private $MER; //calorias calculadas para la caracteristica de mascota y peso
+        
             private  $num_reg;
         
             private $status; //'Animal_status' value= cunicula: sendentario>";
             
+            private $rer; //ype=numeric name= 'RER' values=1>";
+            
+            
+            private $calorias_porc;// % calorias segun peso animal value =18>";
+            
+            private $proteinas_porc; // %proteinas segun peso animal value =0.005>";
+            
+            private $grasas_porc; // %grasa segun peso animal estimado' value =0.005>";
+            
+            private $carbohidratos_porc; //%carbohidratos segun peso animal estimado 015>";
             
            
         
@@ -98,7 +119,8 @@ date_default_timezone_set('UTC');
         
            
             function __construct(){
-               
+                //print ("Construido");
+              
                 $this->mascotas_caracteristica = $this->mascotas_get();
               
             }
@@ -129,7 +151,7 @@ date_default_timezone_set('UTC');
                            
                             if(is_numeric($mascota[0])){ //no primera fila cabecera
                                 $mascotas_caracteristica[$mascota[0]] =$mascota;
-                             
+                              //  echo ( $mascota[0]." NOMBRE-STATUS ".$mascota[1]." RER ".$mascota[2]." peso ". $mascota[3]. " MER ".$mascota[4]. " %Cal/peso ". $mascota[5]. " % Prot/peso". $mascota[6]. " % Grasa/peso ". $mascota[7]. " % Carbohidratos/peso". $mascota[8]."<br>");
                                 $row++;
                             };
                         }
@@ -143,8 +165,11 @@ date_default_timezone_set('UTC');
             function masc_ind_get($denominacion){
                 $mascotas_caracteristica = array();
                 if (($handle = fopen("RER.csv", "r")) !== FALSE) {
-                                           
-                      
+                        $id_animal=0;
+                        $especie="";
+                        $RER=0;
+                        
+                        //$mascota_caracterisiticas = array();
                         $row= 1;
                         while (($mascota = fgetcsv($handle, 1000, ";")) !== FALSE) {
                             
@@ -158,9 +183,11 @@ date_default_timezone_set('UTC');
                         foreach($mascotas_caracteristica as $ia)
                         {
                             if($ia[1]==$denominacion){
-                               
+                                //echo ($ia[0]." ".$ia[1]." ".$ia[2]."----    \n");
                                 $RER = $ia[2];
-                                
+                                //$this->MER = 70*(($peso)**(0.75));
+                                //echo ($ia[0].";".$ia[1].";".$ia[2].";".$this->MER."\n");
+                               // $this->mascota_caracteristica = $ia;  
                                 break;  
                             }
                         }  
@@ -177,7 +204,7 @@ date_default_timezone_set('UTC');
                         $especie="";
                         $RER=0;
                         
-                        
+                        //$mascota_caracterisiticas = array();
                         $row= 1;
                         while (($mascota = fgetcsv($handle4, 1000, ";")) !== FALSE) {
                             
@@ -211,11 +238,14 @@ date_default_timezone_set('UTC');
     Class rellenar_Calorias_Menu{
 
             private $cal_menu; // menus registrados
-           
+            //private $cant_menus;
 
             private $row;
 
-          
+            private $num_ind_menu_ocupados; //ind_menu claves ocupadas por conjunto de alimentos en menu
+
+            private $num_ind_menu_a_ocupar;
+
             function get_cal_menu(){
                 return $this->cal_menu;
             }
@@ -230,6 +260,15 @@ date_default_timezone_set('UTC');
                 global $cant_menus;
                 $this->cal_menu = array();
                 if (($handle = fopen("Calorias_Menu.csv", "r")) !== FALSE) {
+                        $animal_status="";
+                        $peso=0;
+                        $MER=0;
+                        $ind_menu=0;
+                        $alimento="";
+                        $cant_alimento=0;
+                        $calor_gramo=0;
+                        $calor_registro = array();
+                        //global $row;
                         $this->row= 0; //excel primera fila es cabecera 1
                         while (($menu = fgetcsv($handle, 500, ";")) !== FALSE) {
                             
@@ -241,40 +280,17 @@ date_default_timezone_set('UTC');
                             //};
                         }
                       //  echo "row linea 219 ".$this->row;
-                      foreach($this->cal_menu as $tcl){
-
-                        $primer_comp_cal_menu[]=$tcl[0];
-                        
-                      }
-                      $ind_array = array_unique($primer_comp_cal_menu,SORT_NUMERIC);
-
-                      
-                      foreach($ind_array as $n){
-                          echo "<br>".$n."<br>";
-                            $cant_total_calorias_aportadas =0;
-                            $wia= "";
-                            $nmer =0;
-                            foreach($this->cal_menu as $ia)
-                            {
-                                if($n==$ia[0]){
-                                 echo (";".$ia[1]."; kgs:".$ia[2]."; MER:".$ia[3]."; MENU:".$ia[4].";".$ia[5].";  grs.:".$ia[6]."; CAL:".round($ia[7],2)."---<br>");
-                                $cant_total_calorias_aportadas += $ia[7];   
-                                $wia= $ia[0];
-                                $nmer = $ia[3]/1000/100;  
-                            }
-                        } 
-                            if($n==$wia){
-                            echo "<br> Calorias aportadas por nº". $n. " = ".$cant_total_calorias_aportadas;
-                            echo " == ".round($cant_total_calorias_aportadas/$nmer,2)."% del necesitado <br>";
-                        
-                        }
-                        
-                    }  
+                        foreach($this->cal_menu as $ia)
+                        {
+                           echo ("<br>Componente menu ".$ia[0].";".$ia[1].";".$ia[2].";".$ia[3].";".$ia[4].";".$ia[5].";".$ia[6].";".$ia[7]."\n");
+                        }   
                     fclose($handle);
                     }
                     $this->cardinalidad_menu = $this->row;// count($this->cal_menu);
                     return $this->cal_menu;
                 }
+
+
 
 
 
@@ -289,17 +305,30 @@ date_default_timezone_set('UTC');
                 global $cant_menus;
                 $this->cal_menu = array();
                 if (($handle = fopen("Calorias_Menu.csv", "r")) !== FALSE) {
-                       
+                        $animal_status="";
+                        $peso=0;
+                        $MER=0;
+                        $ind_menu=0;
+                        $alimento="";
+                        $cant_alimento=0;
+                        $calor_gramo=0;
+                        $calor_registro = array();
                         //global $row;
                         $this->row= 0; //excel primera fila es cabecera 1
                         while (($menu = fgetcsv($handle, 500, ";")) !== FALSE) {
                             
+                           // $num = count($menu);
+                           // if(is_numeric($menu[0])){ //no primera fila cabecera
                                 $this->cal_menu[]=$menu;
-                            
+                              //  $cant_menus[$row]= $menu[0];
                                 $this->row++;
-                          
+                            //};
                         }
-                  
+                      //  echo "row linea 219 ".$this->row;
+                        foreach($this->cal_menu as $ia)
+                        {
+                          //  echo ("<br>Componente menu ".$ia[0].";".$ia[1].";".$ia[2].";".$ia[3].";".$ia[4].";".$ia[5].";".$ia[6].";".$ia[7]."\n");
+                        }   
                     fclose($handle);
                     }
                     $this->cardinalidad_menu = $this->row;// count($this->cal_menu);
@@ -307,7 +336,7 @@ date_default_timezone_set('UTC');
                 }
 
 
-           
+            //menu = alimentos con el mismo $ind_menu
             
                 function quitar_menu($ind_menu){
                     $this->absorber_datos(); 
@@ -335,7 +364,7 @@ date_default_timezone_set('UTC');
                     $this->absorber_datos();    
                     $this->cal_menu;
                    // $cant_elem_cal_menu = count($this->cal_menu[1]);
-                    
+                    global $num_ind_menu_ocupados;
                     $max_ind_menu_ocupados=0;
                     if(isset($this->cal_menu[4])){
                     foreach($this->cal_menu as $cm){
@@ -350,7 +379,7 @@ date_default_timezone_set('UTC');
 
                     }}else {$max_ind_menu_ocupados=0;}
                     
-                   
+                    global $num_ind_menu_a_ocupar;
                     return $this->num_ind_menu_a_ocupar = $max_ind_menu_ocupados+1;
                 
                 }
@@ -365,23 +394,27 @@ date_default_timezone_set('UTC');
                         $ca = $this->cal_menu[$int_i]; //$row
                        
                        
-                        $txt = "".$ca[0].";".$ca[1].";".$ca[2].";".$ca[3].";".$ca[4].";".$ca[5].";".$ca[6].";".$ca[7].";".round($ca[6]*$ca[7],2)."\n";
+                        $txt = "".$ca[0].";".$ca[1].";".$ca[2].";".$ca[3].";".$ca[4].";".$ca[5].";".$ca[6]."\n";
                         echo "<br> registro que se incluye ".$txt;
-                      foreach($this->cal_menu as $cas){
+                    /*    foreach($this->cal_menu as $cas){
                             foreach($cas as $ca){
-                                $txt = "".$ca[0].";".$ca[1].";".$ca[2].";".$ca[3].";".$ca[4].";".$ca[5].";".$ca[6].";".$ca[7].";".round($ca[6]*$ca[7],2)."\n";
+                            $txt = "".$ca[0].";".$ca[1].";".$ca[2].";".$ca[3].";".$ca[4].";".$ca[5].";".$ca[6]."."\n";
                             echo "<br> registros temporales junto a nuevo que se incluye ".$txt;
                             
-                            }
+                        }*/
                         if (($handle2 = fopen("Calorias_Menu.csv", 'a')) !== FALSE) {
-                               
+                                $this->absorber_datos();
+                                
+                                //foreach( $this->cal_menu as $ca){
+                                $txt = $ca[0].";". $ca[1].";".  $ca[2].";".  $ca[3].";". $ca[4].";".  $ca[5].";".  $ca[6]."\n";
+                                echo "<br> registro que se grava ".$txt;
+                                
                                 fwrite($handle2, $txt);
                                 
-                                
+                                //}
 
                                 fclose($handle2);
                        }
-                    }
                     return $this->cal_menu;
                 }
 
@@ -391,7 +424,7 @@ date_default_timezone_set('UTC');
                     if (($handle2 = fopen("Calorias_Menu.csv", "w")) !== FALSE) {
                         $this->absorber_datos();
                         foreach( $this->cal_menu as $ca){
-                         $txt = $ca[0].";". $ca[1].";". $ca[2].";". $ca[3].";". $ca[4].";". $ca[5].";". $ca[6].";". round($ca[5]*$ca[6],2)."\n";
+                         $txt = $ca[0].";". $ca[1].";". $ca[2].";". $ca[3].";". $ca[4].";". $ca[5].";". $ca[6]."\n";
                         echo "<br> registro que se grava ".$txt;
                         fwrite($handle2, $txt);
                          
@@ -407,7 +440,7 @@ date_default_timezone_set('UTC');
                     if (($handle2 = fopen("Calorias_Menu.csv", "w")) !== FALSE) {
                         
                         foreach( $cal_menu as $ca){
-                         $txt = $ca[0].";". $ca[1].";". $ca[2].";". $ca[3].";". $ca[4].";". $ca[5].";". $ca[6].";". $ca[5]*$ca[6]."\n";
+                         $txt = $ca[0].";". $ca[1].";". $ca[2].";". $ca[3].";". $ca[4].";". $ca[5].";". $ca[6]."\n";
                         echo "<br> registro que se grava ".$txt;
                         fwrite($handle2, $txt);
                          
@@ -428,7 +461,7 @@ date_default_timezone_set('UTC');
             if (($handle2 = fopen("Calorias_Menu.csv", "w")) !== FALSE) {
                 $this->absorber_datos();
                 foreach( $this->cal_menu as $ca){
-                 $txt = $ca[0].";". $ca[1].";". $ca[2].";". $ca[3].";". $ca[4].";". $ca[5].";". $ca[6].";".round( $ca[5]*$ca[6],2)."\n";
+                 $txt = $ca[0].";". $ca[1].";". $ca[2].";". $ca[3].";". $ca[4].";". $ca[5].";". $ca[6]."\n";
                 echo "<br> registro que se grava ".$txt;
                 fwrite($handle2, $txt);
                  
