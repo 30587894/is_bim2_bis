@@ -8,8 +8,6 @@ date_default_timezone_set('UTC');
 
         private $comp_ingr;
 
-        private $num_ind_menu_a_ocupar;
-
         function get_comp_ingredientes(){
             return $this->comp_ingr;
         }
@@ -32,7 +30,7 @@ date_default_timezone_set('UTC');
         }
 
         function añadir_ingredientes($denominacion, $tipo_alimento, $porciento_calorias, $porciento_proteinas,$porciento_grasa, $porciento_carbohidratos){
-            $comp_ingr = array();
+           if(!is_null($denominacion) and $denominacion!=""){
             if (($handle3 = fopen("COMPOSICION_INGREDIENTES.csv", "a")) !== FALSE) {
                    
                 $txt = time().";". $denominacion.";".  $tipo_alimento.";".$porciento_calorias.";".$porciento_proteinas.";".$porciento_grasa.";".$porciento_carbohidratos."\n";
@@ -44,9 +42,9 @@ date_default_timezone_set('UTC');
 
                 fclose($handle3);
                 }
-                return $comp_ingr;
+               
             }
-
+        }
 
 
 
@@ -81,10 +79,7 @@ date_default_timezone_set('UTC');
            
             private  $num_reg;
         
-            private $status; //'Animal_status' value= cunicula: sendentario>";
-            
-            
-           
+        
         
             function get_num_reg(){
                 return $this->num_reg;
