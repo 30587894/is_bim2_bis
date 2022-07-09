@@ -35,7 +35,7 @@ Class resultados{
 
         global $relleno_Calorias_Menu_csv;
         $relleno_Calorias_Menu_csv = new Rellenar_Calorias_Menu();
-
+        //$this->num_menu = $relleno_Calorias_Menu_csv->calcular_id_menu();
      
     }
 
@@ -99,7 +99,7 @@ Class resultados{
             $relleno_Calorias_Menu_csv = new rellenar_Calorias_Menu();
 
                         
-            $this->num_menu = $relleno_Calorias_Menu_csv->calcular_id_menu();
+           $this->num_menu = $relleno_Calorias_Menu_csv->calcular_id_menu();
 
            
              

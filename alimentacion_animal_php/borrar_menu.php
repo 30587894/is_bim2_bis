@@ -42,7 +42,7 @@ error_reporting(0);
 
                     $cal_menu= $rcl->quitar_menu($ca[0]);
 
-                    echo "menu quitado nº ".$ca[0];
+                    echo "<br> Menu quitado nº ".$ca[0];
                     $rcl->reescribir_Calorias_Menu($cal_menu);
                     break;
 

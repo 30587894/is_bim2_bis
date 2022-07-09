@@ -16,25 +16,25 @@ Cargar_menu
     $jk=0;
            for($jk; $jk<$u; $jk++){
                 
-               $n_menu =$_SESSION["alimentos_racion".$jk][0]; //limento
+               $n_menu =$_SESSION["alimentos_racion".$jk][0]; //id menu
                $alimento=$_SESSION["alimentos_racion".$jk][2]; //alimento
                $cantidad= $_SESSION["alimentos_racion".$jk][1]; //cantidad
                $cal_gr=$_SESSION["alimentos_racion".$jk][3];//porce_cal
                $cal_tot=$_SESSION["alimentos_racion".$jk][4];//cal total
                 
-         
-        $txt = time().";".$animal.";".$peso.";".$MER.";".$num_menu.";".$alimento.";".$cantidad.";".$cal_gr.";".$cal_tot."\n";
-        echo "<br> 239 registro que se graba NOMBRE ".$alimento."   cantidad ".$cantidad."  porcentaje calorias ".$cal_gr."total".$cal_tot."\n";
-        
-        if (($handle0701 = fopen("Calorias_Menu.csv", 'a')) !== FALSE) {
-                echo "<br> registro que se graba ".$txt;
+                
+                $txt = time().";".$animal.";".$peso.";".$MER.";".$num_menu.";".$alimento.";".$cantidad.";".$cal_gr.";".$cal_tot."\n";
+                echo "<br> 27 registro que se graba NOMBRE ".$alimento."   cantidad ".$cantidad."  porcentaje calorias ".$cal_gr."  total".$cal_tot."\n";
+                
+                if (($handle0701 = fopen("Calorias_Menu.csv", 'a')) !== FALSE) {
+                        echo "<br> registro que se graba ".$txt;
 
-             fwrite($handle0701, $txt);
- 
-             fclose($handle0701);
+                    fwrite($handle0701, $txt);
         
-              }
-          
+                    fclose($handle0701);
+                
+                    }
+                
      }
 
 ?>
