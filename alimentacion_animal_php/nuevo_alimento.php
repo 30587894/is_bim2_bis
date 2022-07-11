@@ -1,6 +1,6 @@
 nuevo_alimento
 <?php
-
+ error_reporting(0);
  include_once("cabeceras.php");
  echo '<form  width = 160px method="POST">'; //action="Resultados.php"
 

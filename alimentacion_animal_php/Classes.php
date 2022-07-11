@@ -1,6 +1,6 @@
 <?php
 
-//error_reporting(0);
+error_reporting(0);
 
 date_default_timezone_set('UTC');
 
@@ -36,8 +36,7 @@ date_default_timezone_set('UTC');
                 
                 fwrite($handle3, $txt);
                 
-                //}
-
+               
                 fclose($handle3);
                 }
                
@@ -61,10 +60,7 @@ date_default_timezone_set('UTC');
                         };
                     }
         
-                    foreach($comp_ingr as $ia)
-                    {
-                        //echo ($ia[1]."\n");
-                    }   
+                  
                 fclose($handle);
                 }
                 return $comp_ingr;
@@ -203,7 +199,7 @@ date_default_timezone_set('UTC');
     Class rellenar_Calorias_Menu{
 
             private $cal_menu; // menus registrados
-            private $num_ind_menu_a_ocupar;
+           
 
             private $row;
 
@@ -225,19 +221,17 @@ date_default_timezone_set('UTC');
                 if (($handle = fopen("Calorias_Menu.csv", "r")) !== FALSE) {
                         $this->row= 0; //excel primera fila es cabecera 1
                         while (($menu = fgetcsv($handle, 500, ";")) !== FALSE) {
-                            
-                           // $num = count($menu);
-                           // if(is_numeric($menu[0])){ //no primera fila cabecera
+                       
                                 $this->cal_menu[]=$menu;
-                              //  $cant_menus[$row]= $menu[0];
+                           
                                 $this->row++;
-                            //};
+                         
                         }
-                      //  echo "row linea 219 ".$this->row;
+                     
                       foreach($this->cal_menu as $tcl){
 
                         $primer_comp_cal_menu[]=$tcl[0]; //numero de referencia del menu
-                     //   echo " linea 235 ".$tcl[0]."--".$tcl[1]."--".$tcl[2]."--".$tcl[3]."--".$tcl[4]."--".$tcl[5]."--".$tcl[6]."--".$tcl[7]."<br>";
+                    
                       }
                       $ind_array = array_unique($primer_comp_cal_menu,SORT_NUMERIC);
 
@@ -268,22 +262,14 @@ date_default_timezone_set('UTC');
                     $this->cardinalidad_menu = $this->row;// count($this->cal_menu);
                     return $this->cal_menu;
                 }
-
-
-
-
-
-
-
-            
+      
             function absorber_datos(){
 
-               ////$this->cal_menu;
-              
+             
                 $this->cal_menu = array();
                 if (($handle = fopen("Calorias_Menu.csv", "r")) !== FALSE) {
                        
-                        //global $row;
+                        
                         $this->row= 0; //excel primera fila es cabecera 1
                         while (($menu = fgetcsv($handle, 500, ";")) !== FALSE) {
                             
@@ -306,7 +292,7 @@ date_default_timezone_set('UTC');
                     $this->absorber_datos(); 
                     $this->cal_menu;
                     $aux_cal_menu =array();
-                   // global $num_ind_menu_ocupados;
+                   
                     
                     $i=0;
 
@@ -314,7 +300,7 @@ date_default_timezone_set('UTC');
 
                         if($rgtro[0] != $ind_menu){
                             $aux_cal_menu[$i]=$rgtro;
-                          //  $num_ind_menu_ocupados[$i]=$rgtro[0];
+                          
                             echo " <br> Se conserva:  ".$aux_cal_menu[$i][0]. " ".$aux_cal_menu[$i][1];
                             $i++;
                         } else{
@@ -329,11 +315,9 @@ date_default_timezone_set('UTC');
                 
                 function calcular_id_menu(){
                     $this->absorber_datos();    
-                   // $this->cal_menu;
-                   // $cant_elem_cal_menu = count($this->cal_menu[1]);
-                    
+                  
                     $max_ind_menu_ocupados=0;
-                    //if(isset($this->cal_menu[4])){
+                    
                     foreach($this->cal_menu as $cm){
                         if(is_null($cm[4])) {
                             $max_ind_menu_ocupados=0;
@@ -346,90 +330,35 @@ date_default_timezone_set('UTC');
 
                     }
                 
-                  //  }else {$max_ind_menu_ocupados=0;}
-                    
                    
                     return $this->num_ind_menu_a_ocupar = $max_ind_menu_ocupados+1;
                 
                 }
-                function anadir_alimento_a_menu($ca){
-                        $cal_menu= $this->absorber_datos(); 
-
-                        $int_i = count($cal_menu[0]);
-
-                        $ca[0]=$int_i; 
-                        
-                        $ca[6]=5;
-                        $ca = $this->cal_menu[$int_i]; //$row
-                       
-                       
-                        $txt = $ca[0].";".$ca[1].";".$ca[2].";".$ca[3].";".$ca[4].";".$ca[5].";".$ca[6].";".$ca[7].";".round($ca[6]*$ca[7],2)."\n";
-                        echo "<br> registro que se incluye ".$txt;
-                      foreach($this->cal_menu as $cas){
-                          
-                            foreach($cas as $ca){
-                                $txt = $ca[0].";".$ca[1].";".$ca[2].";".$ca[3].";".$ca[4].";".$ca[5].";".$ca[6].";".$ca[7].";".round($ca[6]*$ca[7],2)."\n";
-                            echo "<br> registros temporales junto a nuevo que se incluye ".$txt;
-                            
-                            }
-                        if (($handle2 = fopen("Calorias_Menu.csv", 'a')) !== FALSE) {
-                               
-                                fwrite($handle2, $txt);
-                                
-                                
-
-                                fclose($handle2);
-                       }
-                    }
-                    return $this->cal_menu;
-                }
-
+   
                 function reescribir_Calorias_Menu($cal2_menu){
                   if (($handle21 = fopen("Calorias_Menu.csv", "w")) !== FALSE) {
                         
-                        //fwrite($handle21,"");
-                        fclose($handle21);
+                          fclose($handle21);
                         }
 
                     foreach( $cal2_menu as $ca){    
 
                     if (($handle2 = fopen("Calorias_Menu.csv", "a")) !== FALSE) {
                       
-                        //foreach( $cal2_menu as $ca){
+                       
                          $txt = $ca[0].";". $ca[1].";". $ca[2].";". $ca[3].";". $ca[4].";". $ca[5].";". $ca[6].";". floatval($ca[5])*floatval($ca[6])."\n";
-                       // echo "<br> registro que se grava ";
+                       
                         fwrite($handle2, $txt);
                         fclose($handle2);
                         }
 
                       
                    }
-                 //  return $this->cal_menu;
+            
                     
                 }
 
-/*
-        function anadir_menu_a_csv(){
-        
-        
 
-            $this->absorber_datos(); 
-            if (($handle2 = fopen("Calorias_Menu.csv", "w")) !== FALSE) {
-                $this->absorber_datos();
-                foreach( $this->cal_menu as $ca){
-                 $txt = $ca[0].";". $ca[1].";". $ca[2].";". $ca[3].";". $ca[4].";". $ca[5].";". $ca[6].";".round( $ca[5]*$ca[6],2)."\n";
-                echo "<br> registro que se grava ".$txt;
-                fwrite($handle2, $txt);
-                 
-                }
-
-                fclose($handle2);
-           }
-           return $this->cal_menu;
-            
-        
-    }
-*/
     }
            
 
