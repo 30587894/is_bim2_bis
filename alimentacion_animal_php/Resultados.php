@@ -1,9 +1,27 @@
+<!DOCTYPE html> 
 
+<html lang="es" > 
+    
+
+<head> 
+    
+<h1>
+    CREACION DE MENU Y CALCULO DE SU BALANCEADO
+</h1>
+ </head>
+ <body>
+     <br>Instrucciones:
+     <br> 1º Elija la mascota entre las registradas, introduzca su peso, y modifique el resto de parametros si quiere.
+     <br> 2º Ponga las cantidades de los alimentos que le parezca, y modifique el resto de parametros si quiere.
+     <br> 3º Envie el formulario, y obtendra provisionalmente un balanceado de que tanto se acerca a la necesidad de la mascota.
+     <br> 4º Si esta conforme con el anterior, dele a CARGAR MENU, y quedará registrado; si no esta conforme vuelva al paso 1º.
+     <br>
+ </body>
+</html>
 <?php
 session_start();
-//$email = $_SESSION["mivariable"];
-include_once("cabeceras.php");
 
+include_once("cabeceras.php");
 error_reporting(0);
 
 Class resultados{
@@ -242,5 +260,6 @@ Class resultados{
     $result =new resultados();
     
     $result->alimentos();
+    
 
 ?>

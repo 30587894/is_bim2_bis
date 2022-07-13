@@ -1,4 +1,20 @@
-consultar_menus
+<!DOCTYPE html> 
+
+<html lang="es" > 
+    
+<head> 
+        <h1>
+CONSULTAR MENUS
+        </h1>
+</head>
+ <body>
+     <br>Instrucciones:
+     <br> 1º Por cada MENU apareceran lo alimentos con su componente calorica. Al pie el balanceamiento logrado para esa mascota.
+     <br>
+     <br>
+ </body>
+</html>
+
 
 <?php
 include_once( "Classes.php");

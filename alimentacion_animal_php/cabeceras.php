@@ -1,10 +1,8 @@
 
 <html>
  
-<h1>
-    Calculo de menus balanceados para mascotas
-    </h1>
 
+<br>
 
  '<A HREF="index.php" class="nav-enlace">Inicio</A>';
 

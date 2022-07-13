@@ -1,4 +1,21 @@
-nuevo_alimento
+<!DOCTYPE html> 
+
+<html lang="es" > 
+    
+<head> 
+        <h1>
+REGISTRAR NUEVO ALIMENTO
+        </h1>
+</head>
+ <body>
+     <br>Instrucciones:
+     <br> 1º Rellene los campos y dele a enviar para registrar un nuevo alimento.
+     <br> OBSERVACION: Debido a que hay más de 6500 registros, y el ahora registrado se añade a la cola, no saldra en Cargar Menu.
+     <br> En Cargar_Menu (Resultados.php) solo salen los 6 primeros del listado.
+     <br> Para que salgan todos quitar la restricción en el fichero Resultados.php, linea 107.   
+     <br>
+ </body>
+</html>
 <?php
  error_reporting(0);
  include_once("cabeceras.php");

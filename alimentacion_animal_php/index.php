@@ -31,6 +31,17 @@
 
 
 
-    </h1>
+    </h2>
+    <br>
+    <br>
+    <br>
+      Instrucciones:
+      <br>1º cree registro de mascota -NUEVA MASCOTA-. 
+      <br>2º cree, si piensa que es necesario, un nuevo registro de alimento (ingrediente de menu) -NUEVO ALIMENTO-,
+      <br>3º cree, eligiendo mascota y alimentos entre las registrados, nuevo menú -NUEVO MENU-. Le dará un balanceamiento.
+      <br>4º consulte todos la lista de menus, y a que alimentos y animal corresponde -CONSULTAR MENU-.
+      <br>5º Elija el animal del que quiere borrar el menú, y borre su menú, conservando el resto -BORRAR MENU-.
+      <br>6º Elija el animal del que quiere borrar su registro y borrelo -BORRAR MASCOTA-.
+</h2>
 </body>
 </html>

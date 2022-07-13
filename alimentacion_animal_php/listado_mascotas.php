@@ -1,4 +1,19 @@
-listado_mascotas
+<!DOCTYPE html> 
+
+<html lang="es" > 
+    
+<head> 
+        <h1>
+                LISTADO DE MASCOTAS
+        </h1>
+</head>
+ <body>
+     <br>Instrucciones:
+     <br> 1º En pantalla salen las mascotas registradas.
+     <br>
+     <br>
+ </body>
+</html>
 <?php
 include_once("cabeceras.php");
 include_once("Classes.php");

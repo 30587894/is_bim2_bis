@@ -1,4 +1,20 @@
-borrar_menu
+<!DOCTYPE html> 
+
+<html lang="es" > 
+    
+<head> 
+        <h1>
+BORRAR REGISTRO DE MASCOTA
+        </h1>
+</head>
+ <body>
+     <br>Instrucciones:
+     <br> 1º Elija la mascota-estado entre las registradas, y dele enviar; el primer MENU de esa mascota-estado se borrará.
+     <br> 2º La siguientes reseñas son los registros que se conservan, una vez borrado lo indicado en 1º.
+     <br>
+     <br>
+ </body>
+</html>
 
 <?php
 

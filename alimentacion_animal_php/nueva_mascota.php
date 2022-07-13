@@ -1,4 +1,19 @@
+<!DOCTYPE html> 
 
+<html lang="es" > 
+    
+<head> 
+        <h1>
+REGISTRAR NUEVA MASCOTA
+        </h1>
+</head>
+ <body>
+     <br>Instrucciones:
+     <br> 1º Rellene los campos, modificandolos si es necesario. El coeficiente de estado es el multiplicador de las calorías básicas de acuerdo al estado de la mascota.
+     <br>
+     <br>
+ </body>
+</html>
 
 
 <?php

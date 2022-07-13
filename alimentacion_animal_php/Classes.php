@@ -251,7 +251,7 @@ date_default_timezone_set('UTC');
                                }
                             } 
                             if($n==$wia){
-                            echo "<br> Calorias aportadas por nº". $n. " = ".$cant_total_calorias_aportadas;
+                            echo "<br> Kilocalorias aportadas por nº". $n. " = ".$cant_total_calorias_aportadas;
                             echo " == ".round($cant_total_calorias_aportadas/$nmer,2)."% del necesitado <br>";
                         
                         }
