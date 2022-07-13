@@ -4,7 +4,7 @@
     
 <head> 
         <h1>
-BORRAR REGISTRO DE MASCOTA
+BORRAR REGISTRO DE MENU DE MASCOTA
         </h1>
 </head>
  <body>

@@ -244,7 +244,14 @@ date_default_timezone_set('UTC');
                             foreach($this->cal_menu as $ia)
                             {
                                 if($n==$ia[0]){
-                                 echo ("--".$ia[1]."; kgs:".$ia[2]."; MER:".$ia[3]."; MENU:".$ia[4].";".$ia[5].";  grs.:".$ia[6]."; CAL:".round($ia[7],2)."---<br>");
+                                 echo ("--".$ia[1]."; kgs:".$ia[2]."; MER:".$ia[3]."; MENU:".$ia[4]."<br>");
+                                  break;
+                               }
+                            }
+                            foreach($this->cal_menu as $ia)
+                            {
+                                if($n==$ia[0]){
+                                 echo ("\t\t-----------".$ia[5].";  grs.:".$ia[6]."; CAL:".round($ia[7],6)."---<br>");
                                 $cant_total_calorias_aportadas += $ia[7];   
                                 $wia= $ia[0];
                                 $nmer = $ia[3]/1000/100;  
@@ -252,7 +259,7 @@ date_default_timezone_set('UTC');
                             } 
                             if($n==$wia){
                             echo "<br> Kilocalorias aportadas por nº". $n. " = ".$cant_total_calorias_aportadas;
-                            echo " == ".round($cant_total_calorias_aportadas/$nmer,2)."% del necesitado <br>";
+                            echo " == ".round($cant_total_calorias_aportadas/$nmer,6)."% del necesitado <br>";
                         
                         }
                         

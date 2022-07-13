@@ -1,5 +1,6 @@
-Cargar_menu
-
+<html>
+    <h1> MENU CARGADO</h1>
+</html>
 <?php
 
     session_start();
@@ -23,8 +24,8 @@ Cargar_menu
                $cal_tot=$_SESSION["alimentos_racion".$jk][4];//cal total
                 
                 
-                $txt = time().";".$animal.";".$peso.";".$MER.";".$num_menu.";".$alimento.";".$cantidad.";".$cal_gr.";".$cal_tot."\n";
-                echo "<br> 27 registro que se graba NOMBRE ".$alimento."   cantidad ".$cantidad."  porcentaje calorias ".$cal_gr."  total".$cal_tot."\n";
+                $txt = time().";".$animal.";".$peso.";".$MER.";".$num_menu.";".$alimento.";".$cantidad.";".$cal_gr.";".$cantidad*$cal_gr."\n";
+                echo "<br> Alimento que se graba NOMBRE: ".$alimento."   cantidad ".$cantidad."  porcentaje calorias ".$cal_gr."  total calorias: ".$cal_tot."\n";
                 
                 if (($handle0701 = fopen("Calorias_Menu.csv", 'a')) !== FALSE) {
                         echo "<br> registro que se graba ".$txt;
