@@ -1,0 +1,23 @@
+numero;Animal_status;RER
+1;canino: Critical care/hospitalized;1
+2;canino: Weight loss/obese;1
+3;canino: Overweight-prone/inactive;1.3
+4;canino: Neutered adult;1.6
+5;canino: Intact adult;1.8
+6;canino: Gestation 1õ mes;1.6
+7;canino: Lactation 1õ mes;3
+8;canino: Growth (puppies/kittens) 1õ mes;2
+9;canino: Gestation 2õ mes;1.8
+10;canino: Lactation 2õ mes;4
+11;canino: Growth (puppies/kittens) 2õ mes;2.5
+12;canino: Gestation 3õ mes;3
+13;canino: Lactation 3õ mes;5
+14;canino: Growth (puppies/kittens) 3õ mes;3
+15;felino: Critical care/hospitalized;1
+16;felino: Weight loss/obese;0.9
+17;felino: Overweight-prone/inactive;1
+18;felino: Neutered adult;1.2
+19;felino: Intact adult;1.4
+20;felino: Gestation;2.5
+21;felino: Lactation;4
+22;felino: Growth (puppies/kittens);2.5
